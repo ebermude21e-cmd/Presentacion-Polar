@@ -235,16 +235,18 @@ h1.title{font-size:31px;font-weight:800;color:var(--ink);margin:6px 0 2px;line-h
   <div class="brand">Seguros La Fe · Renovación 2025–2026</div>
   <div class="kick"><div class="num">5</div><div class="kt">Envejecimiento de toda la cartera Polar</div></div>
   <h1 class="title">El envejecimiento no es solo de Socibela: abarca a toda la cartera</h1>
-  <div class="body">
-    <div class="col" style="flex:1.5"><div class="card" style="flex:1;min-height:0"><div style="font-weight:700;color:var(--ink);margin-bottom:2px">Asegurados de <b>toda la cartera Polar</b> por bloque de edad · <span style="color:var(--pur)">el % es el cambio interanual 2024‑25 → 2025‑26</span></div><div id="c_edadg" class="chart" style="height:calc(100% - 22px)"></div></div></div>
-    <div class="col" style="flex:.62">
-      <div class="stat"><div class="n sm">43,5 → 43,9</div><div class="l">edad promedio de <b>toda la cartera</b> (subió en un año)</div></div>
-      <div class="statrow"><div class="stat"><div class="n sm gold">11,3% → 12,0%</div><div class="l">asegurados <b>70+</b> en la cartera</div></div>
-      <div class="stat"><div class="n red">+30,6%</div><div class="l">crecimiento del bloque <b>90+</b></div></div></div>
-      <div class="card" style="flex:1;display:flex;align-items:center"><div class="lead">El envejecimiento es <b>estructural y transversal</b>: los bloques de 70, 80 y 90+ crecieron en toda la cartera (<b>+12,4%, +12,1% y +30,6%</b>). Más vidas en edades de alta mortalidad elevan la frecuencia esperada — <span class="hl">esto sustenta el ajuste de la tarifa</span> y la recomendación de elevar la suma asegurada, por el perfil de <b>toda Polar</b>, no solo de Socibela.</div></div>
+  <div class="body" style="flex-direction:column;gap:12px">
+    <div class="col" style="flex:1.55"><div class="card" style="flex:1;min-height:0">
+      <div style="font-weight:700;color:var(--ink);font-size:12.5px;margin-bottom:2px"><b>Asegurados por edad</b> y su <b style="color:var(--pur)">crecimiento interanual</b> (barras) · <b style="color:var(--red)">siniestros por año</b> en cada edad (líneas)</div>
+      <div id="c_riesgo" class="chart" style="height:calc(100% - 20px)"></div>
+    </div></div>
+    <div class="card" style="flex:0;padding:13px 20px;display:flex;align-items:center;justify-content:space-around;gap:20px;text-align:center">
+      <div><div style="font-size:22px;font-weight:800;color:var(--red);line-height:1">+30,6%</div><div style="font-size:11px;color:var(--gray);margin-top:3px">crecieron los asegurados <b>90+</b> en un año</div></div>
+      <div style="border-left:1px solid #ece0f5;padding-left:20px"><div style="font-size:22px;font-weight:800;color:var(--gold);line-height:1">+12,4%</div><div style="font-size:11px;color:var(--gray);margin-top:3px">crecieron los asegurados <b>70+</b> en un año</div></div>
+      <div style="border-left:1px solid #ece0f5;padding-left:20px"><div style="font-size:22px;font-weight:800;color:var(--pur);line-height:1">≈8 de 10</div><div style="font-size:11px;color:var(--gray);margin-top:3px">siniestros ocurren en <b>mayores de 60 años</b></div></div>
     </div>
   </div>
-  <div class="foot">Seguros La Fe · Padrón de asegurados — toda la cartera Polar · vigencias 2024–25 y 2025–26 (36.874 → 39.829 asegurados)</div>
+  <div class="foot">Seguros La Fe · Asegurados por edad (36.874 → 39.829) y siniestros por año · Vig. 2024‑25: 205 casos (completa) · Vig. 2025‑26: 222 casos, 199 con edad (en curso)</div>
 </section>
 
 <!-- 8 SEVERIDAD -->
@@ -441,10 +443,18 @@ mk('c_edad',{grid:{left:50,right:16,top:60,bottom:30},legend:{top:6,data:['Vigen
 const gLbl=['0–9','10–19','20–29','30–39','40–49','50–59','60–69','70–79','80–89','90+'];
 const gV1=[2195,3505,5163,4507,6368,5748,5210,2540,1210,428],gV2=[2202,3665,5989,4745,6651,6226,5582,2854,1356,559];
 const gDE=['+0,3%','+4,6%','+16,0%','+5,3%','+4,4%','+8,3%','+7,1%','+12,4%','+12,1%','+30,6%'];
-mk('c_edadg',{grid:{left:54,right:16,top:60,bottom:30},legend:{top:6,data:['Vigencia 2024–25','Vigencia 2025–26'],textStyle:{color:'#6b6577'}},tooltip:{trigger:'axis',formatter:function(ps){var i=ps[0].dataIndex,a=gV1[i],b=gV2[i],d=b-a,sg=d>0?'+':(d<0?'−':'');return '<b>'+ps[0].axisValue+' años</b><br/>Vigencia 2024–25: <b>'+a.toLocaleString('es')+'</b> personas<br/>Vigencia 2025–26: <b>'+b.toLocaleString('es')+'</b> personas<br/>Diferencia absoluta: <b>'+sg+Math.abs(d).toLocaleString('es')+'</b> personas&nbsp;&nbsp;('+gDE[i]+')';}},
- xAxis:{type:'category',data:gLbl,...axC},yAxis:{type:'value',...axC,splitLine:SL},
- series:[{name:'Vigencia 2024–25',type:'bar',data:gV1,itemStyle:{color:'#cdb6e0',borderRadius:[3,3,0,0]},barWidth:'34%'},
- {name:'Vigencia 2025–26',type:'bar',barWidth:'34%',itemStyle:{color:PUR},data:gV2.map((v,i)=>({value:v,itemStyle:{color:i>=7?RED:PUR,borderRadius:[3,3,0,0]},label:{show:true,position:'top',distance:4,formatter:gDE[i],color:'#fff',backgroundColor:i>=7?RED:PUR,padding:[2,4],borderRadius:6,fontSize:9,fontWeight:'bold'}}))}]});
+const sV1=[2,0,3,4,7,27,41,53,43,25],sV2=[5,0,4,4,2,15,41,52,44,32];
+const frec=[0.9,0.0,0.6,0.9,1.1,4.7,7.9,20.9,35.5,58.4]; // siniestros por cada 1.000 asegurados · año completo 2024-25
+mk('c_riesgo',{grid:{left:56,right:54,top:50,bottom:32},
+ legend:{top:5,data:['Asegurados 2024–25','Asegurados 2025–26','Siniestros 2024–25','Siniestros 2025–26'],textStyle:{color:'#6b6577',fontSize:11}},
+ tooltip:{trigger:'axis',formatter:function(ps){var i=ps[0].dataIndex,ds=sV2[i]-sV1[i];return '<b>'+gLbl[i]+' años</b><br/>Asegurados: '+gV1[i].toLocaleString('es')+' → <b>'+gV2[i].toLocaleString('es')+'</b> <span style=\"color:#6A2C91\">('+gDE[i]+')</span><br/>Siniestros: '+sV1[i]+' → <b>'+sV2[i]+'</b> <span style=\"color:#C8102E\">('+(ds>=0?'+':'−')+Math.abs(ds)+')</span>';}},
+ xAxis:{type:'category',data:gLbl,...axC,axisLabel:{color:'#2B2733',fontSize:12,fontWeight:'bold'}},
+ yAxis:[{type:'value',name:'Asegurados',nameTextStyle:{color:'#9a8fab',fontSize:10.5},...axC,splitLine:SL,axisLabel:{color:'#6b6577'}},
+        {type:'value',name:'Siniestros (casos)',nameTextStyle:{color:RED,fontSize:10.5},min:0,max:60,...axC,splitLine:{show:false},axisLabel:{color:RED}}],
+ series:[{name:'Asegurados 2024–25',type:'bar',data:gV1,itemStyle:{color:'#dcc9ec',borderRadius:[3,3,0,0]},barWidth:'30%'},
+ {name:'Asegurados 2025–26',type:'bar',barWidth:'30%',itemStyle:{color:'#9B4FB0',borderRadius:[3,3,0,0]},data:gV2.map((v,i)=>({value:v,label:{show:true,position:'top',distance:3,formatter:gDE[i],color:'#fff',backgroundColor:i>=7?RED:'#8A46A0',padding:[2,4],borderRadius:6,fontSize:8.5,fontWeight:'bold'}}))},
+ {name:'Siniestros 2024–25',type:'line',yAxisIndex:1,data:sV1,smooth:true,symbol:'circle',symbolSize:5,lineStyle:{width:2,color:'#E8A0A0',type:'dashed'},itemStyle:{color:'#E8A0A0'},z:5},
+ {name:'Siniestros 2025–26',type:'line',yAxisIndex:1,data:sV2,smooth:true,symbol:'circle',symbolSize:8,lineStyle:{width:3.5,color:RED},itemStyle:{color:RED},z:6,label:{show:true,position:'top',distance:5,formatter:p=>p.value>0?p.value:'',color:RED,fontSize:10,fontWeight:'bold'}}]});
 
 mk('c_gauge',{series:[{type:'gauge',startAngle:210,endAngle:-30,min:0,max:100,radius:'92%',center:['50%','58%'],progress:{show:true,width:26,itemStyle:{color:RED}},axisLine:{lineStyle:{width:26,color:[[1,'#eee2f0']]}},pointer:{show:false},axisTick:{show:false},splitLine:{show:false},axisLabel:{distance:-4,color:'#9a8fab',fontSize:10},title:{show:true,offsetCenter:[0,'26%'],color:'#6b6577',fontSize:13},detail:{offsetCenter:[0,'-6%'],formatter:'{value}%',color:RED,fontSize:42,fontWeight:'bolder'},data:[{value:88.7,name:'de la SA consumida'}]}]});
 
